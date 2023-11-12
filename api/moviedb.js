@@ -82,3 +82,24 @@ export const fetchPersonMovies = (personId)=>{
 export const searchMovies = (params)=>{
     return apiCall(searchMoviesEndpoint, params);
 }
+
+
+
+// let items =  [
+//     {id : 1, name : "item 1"},
+//     {id : 2, name : "item 2"},
+//     {id : 3, name : "item 3"},
+// ]
+
+
+// const app = requier('express');
+// const router = app.Router();
+
+// app.get('/items', (req,res)=>{
+//     try{
+//          res.json(items);
+//     }
+//     catch(error){
+//          res.status(500).json({message : error.message});
+//     }
+// })

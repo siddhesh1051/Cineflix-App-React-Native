@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ScrollView, Platform } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, Platform, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {Bars3CenterLeftIcon, MagnifyingGlassIcon} from 'react-native-heroicons/outline'
@@ -9,7 +9,11 @@ import { fetchTopRatedMovies, fetchTrendingMovies, fetchUpcomingMovies } from '.
 import { useNavigation } from '@react-navigation/native';
 import Loading from '../components/loading';
 import { styles } from '../theme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
+
 // import DrawerNavigator from './drawer/DrawerNavigator';
+import { theme } from './../theme/index';
 
 const ios = Platform.OS === 'ios';
 
@@ -19,13 +23,71 @@ export default function HomeScreen() {
   const [upcoming, setUpcoming] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [email, setEmail] = useState("");
   const navigation = useNavigation();
+
+
+  const showToast = (text) => {
+    Toast.show({
+      type: 'success',
+      position: 'bottom',
+      text1: text,
+      visibilityTime: 3000,
+      autoHide: true,
+      bottomOffset: 40,
+    });
+  };
+
+  const handleLogout = async () => {
+    Alert.alert(
+      'Logout',
+      'Are you sure you want to log out?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Logout',
+          onPress: async () => {
+            try {
+              // Clear the authentication token from AsyncStorage
+              await AsyncStorage.removeItem('authToken');
+              // Navigate to the login screen or any other desired screen
+              navigation.navigate('Login');
+              showToast('Logged out successfully');
+            } catch (error) {
+              console.log('Error logging out:', error);
+              Alert.alert('Logout Failed', 'An error occurred while logging out');
+            }
+          },
+          style: 'destructive',
+        },
+      ],
+      { cancelable: true }
+    );
+  };
+
+  const retrieveEmail = async () => {
+    try {
+      const storedEmail = await AsyncStorage.getItem('userEmail');
+      console.log('stored email', storedEmail)
+      if (storedEmail !== null) {
+        setEmail(storedEmail);
+      }
+    } catch (error) {
+      console.error('Error retrieving email:', error);
+    }
+  };
+
+  
 
 
   useEffect(()=>{
     getTrendingMovies();
     getUpcomingMovies();
     getTopRatedMovies();
+    retrieveEmail();
   },[]);
 
   const getTrendingMovies = async ()=>{
@@ -48,6 +110,8 @@ export default function HomeScreen() {
 
 
   return (
+
+    
     <View className="flex-1">
     
     <View className="flex-1 bg-neutral-800">
@@ -55,7 +119,7 @@ export default function HomeScreen() {
       <SafeAreaView className={ios? "-mb-2": "mb-3"}>
         <StatusBar style="light" />
         <View className="flex-row justify-between items-center mx-4">
-          <Bars3CenterLeftIcon onPress={()=> navigation.push('Search')} size="30" strokeWidth={2} color="white" />
+          <Bars3CenterLeftIcon onPress={handleLogout} size="30" strokeWidth={2} color="white" />
           <Text 
             className="text-white text-3xl font-bold">
               <Text style={styles.text}>Cine</Text>Flix

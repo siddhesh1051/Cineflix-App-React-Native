@@ -7,9 +7,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/adaptive-icon.png",
-      "resizeMode": "cover",
-      "backgroundColor": "#8D4484"
+      "image": "./assets/adaptiveIcon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#964156"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/adaptiveIcon.png",
         "backgroundColor": "#8D4484"
       },
       "package": "com.cineflix.app"
