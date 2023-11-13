@@ -110,8 +110,6 @@ export default function HomeScreen() {
 
 
   return (
-
-    
     <View className="flex-1">
     
     <View className="flex-1 bg-neutral-800">
