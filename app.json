@@ -19,8 +19,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptiveIcon.png",
-        "backgroundColor": "#8D4484"
+        "foregroundImage": "./assets/logo.png",
+        "backgroundColor": "transparent"
       },
       "package": "com.cineflix.app"
     },
