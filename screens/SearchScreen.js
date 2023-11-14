@@ -62,7 +62,7 @@ export default function SearchScreen() {
                 loading ? (
                     <Loading />
                 ) :
-                    results.length > 0 ? (
+                    results?.length > 0 ? (
                         <ScrollView
                             showsVerticalScrollIndicator={false}
                             contentContainerStyle={{ paddingHorizontal: 15 }}

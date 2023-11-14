@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Loading from '../components/loading'
 const { width, height } = Dimensions.get('window');
+import { serverURL } from '../constants/index'
 
 const Favorites = () => {
 
@@ -35,7 +36,7 @@ const Favorites = () => {
         try {
             console.log('getting favorites')
             console.log('email =>', email)
-            const { data } = await axios.get(`http://192.168.71.155:4000/liked/${email}`)
+            const { data } = await axios.get(`${serverURL}/liked/${email}`)
             console.log('got favorites', data.movies)
             setFavorites(data.movies)
         } catch (error) {
@@ -54,7 +55,7 @@ const Favorites = () => {
 
             
             {   
-                favorites.length > 0 ? (
+                favorites?.length > 0 ? (
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{ paddingHorizontal: 15 }}
@@ -78,7 +79,7 @@ const Favorites = () => {
                                                 />
                                                 <Text className="text-gray-300 ml-1">
                                                     {
-                                                        item.title.length > 20 ? item.title.slice(0, 16) + '...' : item.title
+                                                        item.title?.length > 20 ? item.title.slice(0, 16) + '...' : item.title
                                                     }
                                                 </Text>
                                             </View>

@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Loading from '../components/loading'
 const { width, height } = Dimensions.get('window');
+import { serverURL } from '../constants/index'
 
 const WatchLater = () => {
     const [watchlater, setWatchlater] = useState([])
@@ -34,7 +35,7 @@ const WatchLater = () => {
         try {
             console.log('getting watch layer')
             console.log('email =>', email)
-            const { data } = await axios.get(`http://192.168.71.155:4000/watchLater/${email}`)
+            const { data } = await axios.get(`${serverURL}/watchLater/${email}`)
             console.log('got watch later', data)
             setWatchlater(data.movies)
         } catch (error) {
@@ -51,7 +52,7 @@ const WatchLater = () => {
 
 
             {
-                watchlater.length > 0 ? (
+                watchlater?.length > 0 ? (
                     <ScrollView
                         showsVerticalScrollIndicator={false}
                         contentContainerStyle={{ paddingHorizontal: 15 }}
@@ -75,7 +76,7 @@ const WatchLater = () => {
                                                 />
                                                 <Text className="text-gray-300 ml-1">
                                                     {
-                                                        item.title.length > 20 ? item.title.slice(0, 16) + '...' : item.title
+                                                        item.title?.length > 20 ? item.title.slice(0, 16) + '...' : item.title
                                                     }
                                                 </Text>
                                             </View>

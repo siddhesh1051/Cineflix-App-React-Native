@@ -16,6 +16,8 @@ import Cast from './../components/cast';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
+import { serverURL } from '../constants/index'
+
 
 const ios = Platform.OS === 'ios';
 const topMargin = ios ? '' : ' mt-3';
@@ -98,7 +100,7 @@ export default function MovieScreen() {
 
     const addToList = async () => {
         try {
-            await axios.post("http://192.168.71.155:4000" + "/addFav", {
+            await axios.post(`${serverURL}/addFav`, {
                 email,
                 data: movie,
                 token: token
@@ -108,7 +110,7 @@ export default function MovieScreen() {
                 showToast('Added to Favourites');
             });
         } catch (error) {
-            if (error.response.status === 401) {
+            if (error.response?.status === 401) {
                 AsyncStorage.removeItem("authToken");
                 // navigate('/login')               
             }
@@ -119,7 +121,7 @@ export default function MovieScreen() {
     };
     const addToWatchLater = async () => {
         try {
-            await axios.post("http://192.168.71.155:4000" + "/addWatchLater", {
+            await axios.post(`${serverURL}/addWatchLater`, {
                 email,
                 data: movie,
                 token: token
@@ -130,7 +132,7 @@ export default function MovieScreen() {
 
             });
         } catch (error) {
-            if (error.response.status === 401) {
+            if (error.response?.status === 401) {
                 AsyncStorage.removeItem("authToken");
                 // navigate('/login')               
             }
@@ -143,7 +145,7 @@ export default function MovieScreen() {
     
     const checkLiked = async () => {
         try {
-           await axios.post("http://192.168.71.155:4000" + "/checkLiked", {
+           await axios.post(`${serverURL}/checkLiked`, {
                 email,
                 data: movie,
             }).then(function (res) {
@@ -157,7 +159,7 @@ export default function MovieScreen() {
     };
     const checkWatchLater = async () => {
         try {
-           await axios.post("http://192.168.71.155:4000" + "/checkWatchLater", {
+           await axios.post(`${serverURL}/checkWatchLater`, {
                 email,
                 data: movie,
             }).then(function (res) {
@@ -172,7 +174,7 @@ export default function MovieScreen() {
 
     const removeMovieFromLiked = async () => {
         try {
-            await axios.put("http://192.168.71.155:4000" + "/removeFav", {
+            await axios.put(`${serverURL}/removeFav`, {
                 email,
                 movieId: movie.id,
 
@@ -188,7 +190,7 @@ export default function MovieScreen() {
 
     const removeMovieFromWatchLater = async () => {
         try {
-            await axios.put("http://192.168.71.155:4000" + "/removeWatchLater", {
+            await axios.put(`${serverURL}/removeWatchLater`, {
                 email,
                 movieId: movie.id,
             

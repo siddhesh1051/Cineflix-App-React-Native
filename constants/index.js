@@ -1,5 +1,7 @@
 export const apiKey = '4e44d9029b1270a757cddc766a1bcb63';
 
+export const serverURL = 'http://192.168.71.155:4000'
+
 
 // this data was used for the development of the app
 export const moviesData=[ 
